@@ -2,6 +2,7 @@ package com.code2Give.Backend.controller;
 
 import com.code2Give.Backend.dto.ResidentRequest;
 import com.code2Give.Backend.dto.ResidentResponse;
+import com.code2Give.Backend.model.Resident;
 import com.code2Give.Backend.service.IResidentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/residents")
 @RequiredArgsConstructor
-public class controller {
+public class ResidentController {
 
     private final IResidentService residentService;
 
@@ -21,26 +22,26 @@ public class controller {
 
     // get list of all residents registered on platform
     @GetMapping("")
-    public ResponseEntity<List<ResidentResponse>> getAllResidents(){
+    public ResponseEntity<List<Resident>> getAllResidents(){
         return new ResponseEntity<>(residentService.getAllResidents(), HttpStatus.OK);
     }
 
     // Adding(registration) new resident on intervention plan
     @PostMapping("/register")
-    public ResponseEntity<ResidentResponse> registerResident(@RequestBody ResidentRequest residentRequest) throws Exception {
-        return new ResponseEntity<>(residentService.saveResident(residentRequest), HttpStatus.CREATED);
+    public ResponseEntity<Resident> registerResident(@RequestBody Resident resident) throws Exception {
+        return new ResponseEntity<>(residentService.saveResident(resident), HttpStatus.CREATED);
     }
 
     // Fetching data of a particular resident based on id
     @GetMapping("/id/{residentId}")
-    public ResponseEntity<ResidentResponse> getResidentById(@PathVariable("residentId") Long residentId){
+    public ResponseEntity<Resident> getResidentById(@PathVariable("residentId") Long residentId){
         return new ResponseEntity<>(residentService.getResidentById(residentId), HttpStatus.OK);
     }
 
     // Updating resident's profile
     @PutMapping("/update/{id}")
-    public ResponseEntity<ResidentResponse> updateResident(@PathVariable("id") Long id, @RequestBody ResidentRequest residentRequest){
-        return new ResponseEntity<>(residentService.updateResident(id, residentRequest), HttpStatus.OK);
+    public ResponseEntity<Resident> updateResident(@PathVariable("id") Long id, @RequestBody Resident resident){
+        return new ResponseEntity<>(residentService.updateResident(id, resident), HttpStatus.OK);
     }
 
 }

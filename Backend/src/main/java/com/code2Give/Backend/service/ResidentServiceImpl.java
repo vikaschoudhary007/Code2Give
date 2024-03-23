@@ -19,20 +19,18 @@ public class ResidentServiceImpl implements IResidentService{
 
     // Get the list of all residents registered with non-profit
     @Override
-    public List<ResidentResponse> getAllResidents() {
-        List<Resident> residents = residentRepository.findAll();
-        return residents.stream().map(this::mapToResidentResponse).toList();
+    public List<Resident> getAllResidents() {
+        return residentRepository.findAll();
     }
 
 
     // Get a existing resident's info with id
     @Override
-    public ResidentResponse getResidentById(Long id) {
+    public Resident getResidentById(Long id) {
         Optional<Resident> residentOptional = residentRepository.findById(id);
 
         if(residentOptional.isPresent()){
-            Resident resident = residentOptional.get();
-            return mapToResidentResponse(resident);
+            return residentOptional.get();
         }else {
             throw new ResidentNotFoundException("Resident Not Found");
         }
@@ -40,19 +38,15 @@ public class ResidentServiceImpl implements IResidentService{
 
     // Registering a new resident on the platform
     @Override
-    public ResidentResponse saveResident(ResidentRequest residentRequest) throws Exception {
+    public Resident saveResident(Resident resident) throws Exception {
 
-        Resident isExists = residentRepository.findByFirstVisit(residentRequest.isFirstVisit());
+        Resident isExists = residentRepository.findByFirstVisit(resident.isFirstVisit());
 
         if(isExists != null){
                 throw new Exception("Resident already registered");
         }
 
-        Resident newResident = mapToResident(residentRequest);
-
-        Resident savedResident = residentRepository.save(newResident);
-
-        return mapToResidentResponse(savedResident);
+        return residentRepository.save(resident);
     }
 
     // Function to remove a particular resident from database - based on id
@@ -64,57 +58,57 @@ public class ResidentServiceImpl implements IResidentService{
     // Updating the general information of a resident in database
 
     @Override
-    public ResidentResponse updateResident(Long id, ResidentRequest residentRequest) {
+    public Resident updateResident(Long id, Resident resident) {
 
         Resident existingResident = residentRepository.findById(id)
                 .orElseThrow(() -> new ResidentNotFoundException("Resident not found with id: " + id));
 
         // Update the existing resident entity with data from the request DTO
-        if(residentRequest.getFirstName() != null){
-            existingResident.setFirstName(residentRequest.getFirstName());
+        if(resident.getFirstName() != null){
+            existingResident.setFirstName(resident.getFirstName());
         }
-        if(residentRequest.getLastName() != null){
-            existingResident.setLastName(residentRequest.getLastName());
+        if(resident.getLastName() != null){
+            existingResident.setLastName(resident.getLastName());
         }
-        if(residentRequest.getPlanStartDate() != null){
-            existingResident.setPlanStartDate(residentRequest.getPlanStartDate());
+        if(resident.getPlanStartDate() != null){
+            existingResident.setPlanStartDate(resident.getPlanStartDate());
         }
-        if(residentRequest.getStartDateOfStay() != null){
-            existingResident.setStartDateOfStay(residentRequest.getStartDateOfStay());
+        if(resident.getStartDateOfStay() != null){
+            existingResident.setStartDateOfStay(resident.getStartDateOfStay());
         }
-        if(residentRequest.getEndDateOfStay() != null){
-            existingResident.setEndDateOfStay(residentRequest.getEndDateOfStay());
+        if(resident.getEndDateOfStay() != null){
+            existingResident.setEndDateOfStay(resident.getEndDateOfStay());
         }
-        if(residentRequest.getCurrentAccommodation() != null){
-            existingResident.setCurrentAccommodation(residentRequest.getCurrentAccommodation());
-        }
-
-        existingResident.setFirstVisit(residentRequest.isFirstVisit());
-
-        if(residentRequest.getImmigrationStatus() != null){
-            existingResident.setImmigrationStatus(residentRequest.getImmigrationStatus());
+        if(resident.getPlaceOfAccommodation() != null){
+            existingResident.setPlaceOfAccommodation(resident.getPlaceOfAccommodation());
         }
 
-        existingResident.setWithChildren(residentRequest.isWithChildren());
+        existingResident.setFirstVisit(resident.isFirstVisit());
 
-
-        if(residentRequest.getChallengesIssues() != null){
-            existingResident.setChallengesIssues(residentRequest.getChallengesIssues());
-        }
-        if(residentRequest.getAge() != 0){
-            existingResident.setAge(residentRequest.getAge());
+        if(resident.getImmigrationStatus() != null){
+            existingResident.setImmigrationStatus(resident.getImmigrationStatus());
         }
 
-        existingResident.setMonthlyIncome(residentRequest.getMonthlyIncome());
+        existingResident.setWithChildren(resident.isWithChildren());
+
+
+        if(resident.getChallengesIssues() != null){
+            existingResident.setChallengesIssues(resident.getChallengesIssues());
+        }
+        if(resident.getAge() != 0){
+            existingResident.setAge(resident.getAge());
+        }
+
+        existingResident.setMonthlyIncome(resident.getMonthlyIncome());
 
 
         // Save the updated resident entity
-        Resident updatedResident = residentRepository.save(existingResident);
 
-        // Convert the updated entity to DTO and return
-        return mapToResidentResponse(updatedResident);
+        return residentRepository.save(existingResident);
     }
 
+
+    /// NOT IN USE ANYMORE
     ////////////// Helper Functions to change entity objects to data transmission objects and vice-versa ///////////////
 
     private ResidentResponse mapToResidentResponse(Resident resident){
@@ -125,7 +119,7 @@ public class ResidentServiceImpl implements IResidentService{
                 .planStartDate(resident.getPlanStartDate())
                 .startDateOfStay(resident.getStartDateOfStay())
                 .endDateOfStay(resident.getEndDateOfStay())
-                .currentAccommodation(resident.getCurrentAccommodation())
+                .currentAccommodation(resident.getPlaceOfAccommodation())
                 .firstVisit(resident.isFirstVisit())
                 .immigrationStatus(resident.getImmigrationStatus())
                 .withChildren(resident.isWithChildren())
@@ -142,7 +136,7 @@ public class ResidentServiceImpl implements IResidentService{
                 .planStartDate(residentRequest.getPlanStartDate())
                 .startDateOfStay(residentRequest.getStartDateOfStay())
                 .endDateOfStay(residentRequest.getEndDateOfStay())
-                .currentAccommodation(residentRequest.getCurrentAccommodation())
+                .placeOfAccommodation(residentRequest.getCurrentAccommodation())
                 .firstVisit(residentRequest.isFirstVisit())
                 .immigrationStatus(residentRequest.getImmigrationStatus())
                 .withChildren(residentRequest.isWithChildren())

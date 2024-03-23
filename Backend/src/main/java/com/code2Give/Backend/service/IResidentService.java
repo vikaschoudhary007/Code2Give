@@ -8,9 +8,9 @@ import com.code2Give.Backend.repository.ResidentRepository;
 import java.util.List;
 
 public interface IResidentService {
-    List<ResidentResponse> getAllResidents();
-    ResidentResponse getResidentById(Long id);
-    ResidentResponse saveResident(ResidentRequest residentRequest) throws Exception;
+    List<Resident> getAllResidents();
+    Resident getResidentById(Long id);
+    Resident saveResident(Resident resident) throws Exception;
     void deleteResident(Long id);
-    ResidentResponse updateResident(Long id, ResidentRequest residentRequest);
+    Resident updateResident(Long id, Resident resident);
 }
