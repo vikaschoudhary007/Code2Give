@@ -106,43 +106,4 @@ public class ResidentServiceImpl implements IResidentService{
 
         return residentRepository.save(existingResident);
     }
-
-
-    /// NOT IN USE ANYMORE
-    ////////////// Helper Functions to change entity objects to data transmission objects and vice-versa ///////////////
-
-    private ResidentResponse mapToResidentResponse(Resident resident){
-        return ResidentResponse.builder()
-                .id(resident.getId())
-                .firstName(resident.getFirstName())
-                .lastName(resident.getLastName())
-                .planStartDate(resident.getPlanStartDate())
-                .startDateOfStay(resident.getStartDateOfStay())
-                .endDateOfStay(resident.getEndDateOfStay())
-                .currentAccommodation(resident.getPlaceOfAccommodation())
-                .firstVisit(resident.isFirstVisit())
-                .immigrationStatus(resident.getImmigrationStatus())
-                .withChildren(resident.isWithChildren())
-                .challengesIssues(resident.getChallengesIssues())
-                .age(resident.getAge())
-                .monthlyIncome(resident.getMonthlyIncome())
-                .build();
-    }
-
-    private Resident mapToResident(ResidentRequest residentRequest){
-        return Resident.builder()
-                .firstName(residentRequest.getFirstName())
-                .lastName(residentRequest.getLastName())
-                .planStartDate(residentRequest.getPlanStartDate())
-                .startDateOfStay(residentRequest.getStartDateOfStay())
-                .endDateOfStay(residentRequest.getEndDateOfStay())
-                .placeOfAccommodation(residentRequest.getCurrentAccommodation())
-                .firstVisit(residentRequest.isFirstVisit())
-                .immigrationStatus(residentRequest.getImmigrationStatus())
-                .withChildren(residentRequest.isWithChildren())
-                .challengesIssues(residentRequest.getChallengesIssues())
-                .age(residentRequest.getAge())
-                .monthlyIncome(residentRequest.getMonthlyIncome())
-                .build();
-    }
 }
