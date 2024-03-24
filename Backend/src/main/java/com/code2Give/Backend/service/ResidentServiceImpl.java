@@ -40,11 +40,11 @@ public class ResidentServiceImpl implements IResidentService{
     @Override
     public Resident saveResident(Resident resident) throws Exception {
 
-        Resident isExists = residentRepository.findByFirstVisit(resident.isFirstVisit());
-
-        if(isExists != null){
-                throw new Exception("Resident already registered");
-        }
+//        Resident isExists = residentRepository.findByFirstVisit(resident.isFirstVisit());
+//
+//        if(isExists != null){
+//                throw new Exception("Resident already registered");
+//        }
 
         return residentRepository.save(resident);
     }
