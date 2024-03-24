@@ -33,7 +33,7 @@ const ResidentForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
 
@@ -78,7 +78,6 @@ const ResidentForm = () => {
     
   console.log(response);  
   }
-};
 
 
   
