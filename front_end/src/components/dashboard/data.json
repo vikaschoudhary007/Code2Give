@@ -1,0 +1,10 @@
+{
+    "user": {
+      "firstName": "John Doe",
+      "immigrationStatus": "Immigrant",
+      "age": "25",
+      "accommodationStatus": "Single",
+      "orientation": "Straight"
+    }
+  }
+  
