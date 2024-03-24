@@ -234,3 +234,161 @@ return (
         </>
 );
 ```
+
+## You can use the following code for sending requested to backend and receiving data in response too!!
+
+### function to create resident 
+The below code uses static request object but the code is fully functional.
+
+```javascript
+import React, { useState } from 'react';
+import { API_BASE_URL } from './Config';
+import axios from 'axios';
+
+const initialFormData = {
+    firstName:"John",
+    lastName:"Doe",
+    planStartDate:"2024-03-24",
+    startDateOfStay:"2024-03-28",
+    endDateOfStay:"2024-05-24",
+    placeOfAccommodation:"House 4",
+    firstVisit:true,
+    immigrationStatus:"Immigrant",
+    isNative:false,
+    veteran:false,
+    withChildren: true,
+    exitOrientation:"",
+    challengesIssues:"",
+    age: 25,
+    monthlyIncome:1200,
+    caregivers:"Employee 1",
+    significantPersons:"GrandMother - 000-000-0000"
+  }
+
+
+const Function = () => {
+
+    const [formData, updateFormData] = useState(initialFormData);
+
+    const handleChange = (e) => {
+      updateFormData({
+        ...formData,
+    
+        // Trimming any whitespace
+        [e.target.name]: e.target.value.trim()
+      });
+    };
+    
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      console.log(formData);
+      
+      // Create the request object here
+      const data = {
+        resident: formData,
+        treatmentTeam:[
+          {
+            "role": "Psychiatrist",
+            "name": "Dr. XYZ",
+            "address": "Montreal",
+            "phone" : "000-000-0000",
+            "email": "xyz@gmail.com"
+          }
+        ],
+        communityServices : [
+          {
+            "name": "Spectre de rue",
+            "address": "1280 Ontario St E",
+            "contact":"000-000-0000",
+            "phone":"",
+            "mission":"Home / support for substance users"
+          }
+        ],
+    
+        objectives : [
+          {
+            "title": "Improving consumption habits",
+            "description": "Maintain a routine of consumption...",
+            "term":"Short-term",
+            "status":"In progress",
+            "means":"Use addiction services and follow established routines (average 4 injections per day)",
+            "healthDeterminants":"Physical Health | Mental health"
+          }
+        ]
+      }
+
+      console.log(data)
+      // ... submit to API 
+    
+      const response = await axios.post(`http://localhost:5454/api/v1/interventions/create`, data,{
+        headers: {
+          "Content-Type": 'application/json'
+        }})
+        
+      console.log(response);  
+      
+    }
+
+    return (
+        <div>
+          <button onClick={handleSubmit}>Register Resident</button>
+        </div>
+    );
+}
+
+export default Function;
+```
+
+### function to get list of all residents
+
+```javascript
+import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from './Config';
+import axios from 'axios';
+
+
+
+const ShowData = () => {
+
+    const [data, setData] = useState(null); // Initialize state to hold data
+
+
+    useEffect(() => {
+
+        const fetchData = async() => {
+            try{
+                const response = await axios.get('http://localhost:5454/api/v1/interventions',{
+                    headers: {
+                      "Content-Type": 'application/json'
+                }})
+                
+                console.log(response.data)
+                setData(response.data); // Set the fetched data to state
+            }catch(error){
+                console.log(error)
+            }
+        }
+
+        fetchData();
+    },[])
+
+    return (
+        <div>
+        {data ? (
+            <ul>
+                {data.map((item, index) => (
+                    <li key={index}>
+                        <p>Object Name: {item.resident.firstName}</p>
+                        {/* Render other properties of the object as needed */}
+                    </li>
+                ))}
+            </ul>
+        ) : (
+            <p>Loading...</p>
+        )}
+    </div>
+    );
+}
+
+export default ShowData;
+```
