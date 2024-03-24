@@ -212,3 +212,25 @@ const handleSubmit = async (e) => {
 }
 
 ```
+
+```javascript
+  // same form for react
+    // use this for reference - make sure your input fileds have prop "name" same as the the fileds in the initialFormData object
+    // so that the handleChangeFunction works 
+
+return (
+        <>
+          <label>
+            First Name
+            <input name="firstName" onChange={handleChange} />
+          </label>
+          <br />
+          <label>
+            Last Name
+            <input name="lastName" onChange={handleChange} />
+          </label>
+          <br />
+          <button onClick={handleSubmit}>Register Resident</button>
+        </>
+);
+```
