@@ -36,8 +36,52 @@ const ResidentForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-  };
 
+    const data = {
+      resident: formData,
+    treatmentTeam:[
+      {
+        "role": "Psychiatrist",
+        "name": "Dr. XYZ",
+        "address": "Montreal",
+        "phone" : "000-000-0000",
+        "email": "xyz@gmail.com"
+      }
+    ],
+    communityServices : [
+      {
+        "name": "Spectre de rue",
+        "address": "1280 Ontario St E",
+        "contact":"000-000-0000",
+        "phone":"",
+        "mission":"Home / support for substance users"
+      }
+    ],
+
+    objectives : [
+      {
+        "title": "Improving consumption habits",
+        "description": "Maintain a routine of consumption...",
+        "term":"Short-term",
+        "status":"In progress",
+        "means":"Use addiction services and follow established routines (average 4 injections per day)",
+        "healthDeterminants":"Physical Health | Mental health"
+      }
+    ]
+
+  }
+
+  const response = await axios.post(`${API_BASE_URL}/interventions/create`, data,{
+    headers: {
+      "Content-Type": 'application/json',
+    }})
+    
+  console.log(response);  
+  }
+};
+
+
+  
   return (
     <div>
 
