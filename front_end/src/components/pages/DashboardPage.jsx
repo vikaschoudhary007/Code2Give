@@ -19,7 +19,6 @@ const DashboardPage = () => {
       <UserProfile user={userData} />
       <InterventionDetails plan={userPlan} />
       <Goals goals={userGoals} />
-
       <Link to="/residentForm" className="form">Add/Create User</Link>
     </div>
   );
