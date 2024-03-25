@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"
-
+import "./Navbar.css"
 
 
 function Navbar() {
@@ -20,11 +20,15 @@ function Navbar() {
                     </li>
 
                     <li className="contact-us">
-                        <Link className="nav-link" to="/contact">Contact Us</Link>
+                        <Link className="nav-link" to="/quick-help-form">Contact Us</Link>
                     </li>
 
                     <li className="dashboard">
                         <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                    </li>
+
+                    <li className="create-user">
+                        <Link className="nav-link" to="/residentForm">Create User</Link>
                     </li>
 
                     <li className="nav-item dropdown">
@@ -32,8 +36,8 @@ function Navbar() {
                         Dropdown
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a className="dropdown-item" href="#">User Sign In</a>
-                        <a className="dropdown-item" href="#">Employee Sign In</a>
+                        <a className="dropdown-item" href="/login">Sign In</a>
+                        
                         <div className="dropdown-divider"></div>
                         <a className="dropdown-item" href="#">Sign Out</a>
                         </div>
