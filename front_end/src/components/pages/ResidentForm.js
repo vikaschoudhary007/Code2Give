@@ -19,12 +19,13 @@ const ResidentForm = () => {
     exitOrientation: '',
     challengesIssues: '',
     age: '',
-    borough: '',
+    borough: '',                    //ADD THIS INTO FORM MISSSSSING
     monthlyIncome: '',
     caregivers: '',
     significantPersons: '',
   });
 
+  //for radio buttons, can keep or add up to you
   const immigrationOptions = ["Citizen", "Permanent Resident", "Temporary Resident", "Visa Holder", "Asylum Seeker (Received)", "Asylum Seeker (In-Process)", "No Status"];
 
 
