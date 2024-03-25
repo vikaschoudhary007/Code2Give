@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import axios from "axios";
+export const API_BASE_URL="http://localhost:5454/api/v1";
+
 
 const ResidentForm = () => {
   const [formData, setFormData] = useState({
@@ -16,12 +19,13 @@ const ResidentForm = () => {
     exitOrientation: '',
     challengesIssues: '',
     age: '',
-    borough: '',
+    borough: '',                    //ADD THIS INTO FORM MISSSSSING
     monthlyIncome: '',
     caregivers: '',
     significantPersons: '',
   });
 
+  //for radio buttons, can keep or add up to you
   const immigrationOptions = ["Citizen", "Permanent Resident", "Temporary Resident", "Visa Holder", "Asylum Seeker (Received)", "Asylum Seeker (In-Process)", "No Status"];
 
 
@@ -33,11 +37,56 @@ const ResidentForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    console.log("Form submission attempted"); // Check if this logs
+
+    const data = {
+      resident: formData,
+    treatmentTeam:[
+      {
+        "role": "Psychiatrist",
+        "name": "Dr. XYZ",
+        "address": "Montreal",
+        "phone" : "000-000-0000",
+        "email": "xyz@gmail.com"
+      }
+    ],
+    communityServices : [
+      {
+        "name": "Spectre de rue",
+        "address": "1280 Ontario St E",
+        "contact":"000-000-0000",
+        "phone":"",
+        "mission":"Home / support for substance users"
+      }
+    ],
+
+    objectives : [
+      {
+        "title": "Improving consumption habits",
+        "description": "Maintain a routine of consumption...",
+        "term":"Short-term",
+        "status":"In progress",
+        "means":"Use addiction services and follow established routines (average 4 injections per day)",
+        "healthDeterminants":"Physical Health | Mental health"
+      }
+    ]
+
+  }
+
+  const response = await axios.post(`${API_BASE_URL}/interventions/create`, data,{
+    headers: {
+      "Content-Type": 'application/json',
+    }
+  });
+    
+  console.log(response);  
   };
 
+
+  
   return (
     <div>
 
@@ -75,7 +124,7 @@ const ResidentForm = () => {
           <label>Start Date:</label>
           <input
             type="date"
-            name="startDateofStay"
+            name="startDateOfStay"
             value={formData.startDateOfStay}
             onChange={handleChange}
           />
@@ -84,7 +133,7 @@ const ResidentForm = () => {
           <label>End Date:</label>
           <input
             type="date"
-            name="endDateofStay"
+            name="endDateOfStay"
             value={formData.endDateOfStay}
             onChange={handleChange}
           />
@@ -92,10 +141,9 @@ const ResidentForm = () => {
             <label>Place of Accommodation:</label>
             <input
               type="text" 
-              name="placeOfAccomodation"
+              name="placeOfAccommodation"
               value={formData.placeOfAccommodation}
               onChange={handleChange}
-              min="0" 
             />
           </div>
         </div>
@@ -151,11 +199,11 @@ const ResidentForm = () => {
           />
         </div>
         <div>
-        <label>Orientation: </label>
+          <label>Orientation:</label>
           <input
-            type="checkbox"
-            name="withChildren"
-            checked={formData.withChildren}
+            type="text" 
+            name="exitOrientation"
+            value={formData.exitOrientation}
             onChange={handleChange}
           />
         </div>
@@ -202,7 +250,7 @@ const ResidentForm = () => {
           <label>Significant Persons:</label>
           <input
             type="text" 
-            name="age"
+            name="significantPersons"
             value={formData.significantPersons}
             onChange={handleChange}
           />

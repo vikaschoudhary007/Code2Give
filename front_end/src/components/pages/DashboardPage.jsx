@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import UserProfile from '../dashboard/UserProfile';
 import InterventionDetails from '../dashboard/InterventionDetails';
 import Goals from '../dashboard/Goals';
-
+import ShowData from '../ShowData';
 const DashboardPage = () => {
   const [userData, setUserData] = useState({}); // Placeholder for actual user data fetching logic
   const [userPlan, setUserPlan] = useState({}); // Placeholder for actual plan data fetching logic
@@ -19,6 +19,8 @@ const DashboardPage = () => {
       <UserProfile user={userData} />
       <InterventionDetails plan={userPlan} />
       <Goals goals={userGoals} />
+      <ShowData data={userData} />
+      
       <Link to="/residentForm" className="form">Add/Create User</Link>
     </div>
   );
