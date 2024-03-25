@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import "./ResidentForm.css"
 const ResidentForm = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -39,9 +39,9 @@ const ResidentForm = () => {
   };
 
   return (
-    <div>
+    <div className="form-container">
 
-      <h2>Add/Create New User</h2>
+      <h2 className="form-title">Add/Create New User</h2>
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -179,6 +179,17 @@ const ResidentForm = () => {
             min="0" 
           />
         </div>
+
+        <div>
+          <label>Borough:</label>
+          <input
+            type="text" 
+            name="borough"
+            value={formData.borough}
+            onChange={handleChange}
+          />
+        </div>
+
         <div>
           <label>Monthly Income:</label>
           <input
