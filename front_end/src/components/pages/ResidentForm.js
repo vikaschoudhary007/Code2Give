@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import axios from "axios";
+export const API_BASE_URL="http://localhost:5454/api/v1";
+
 
 const ResidentForm = () => {
   const [formData, setFormData] = useState({
@@ -36,6 +39,7 @@ const ResidentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    console.log("Form submission attempted"); // Check if this logs
 
     const data = {
       resident: formData,
@@ -74,10 +78,11 @@ const ResidentForm = () => {
   const response = await axios.post(`${API_BASE_URL}/interventions/create`, data,{
     headers: {
       "Content-Type": 'application/json',
-    }})
+    }
+  });
     
   console.log(response);  
-  }
+  };
 
 
   
@@ -118,7 +123,7 @@ const ResidentForm = () => {
           <label>Start Date:</label>
           <input
             type="date"
-            name="startDateofStay"
+            name="startDateOfStay"
             value={formData.startDateOfStay}
             onChange={handleChange}
           />
@@ -127,7 +132,7 @@ const ResidentForm = () => {
           <label>End Date:</label>
           <input
             type="date"
-            name="endDateofStay"
+            name="endDateOfStay"
             value={formData.endDateOfStay}
             onChange={handleChange}
           />
@@ -135,10 +140,9 @@ const ResidentForm = () => {
             <label>Place of Accommodation:</label>
             <input
               type="text" 
-              name="placeOfAccomodation"
+              name="placeOfAccommodation"
               value={formData.placeOfAccommodation}
               onChange={handleChange}
-              min="0" 
             />
           </div>
         </div>
@@ -194,11 +198,11 @@ const ResidentForm = () => {
           />
         </div>
         <div>
-        <label>Orientation: </label>
+          <label>Orientation:</label>
           <input
-            type="checkbox"
-            name="withChildren"
-            checked={formData.withChildren}
+            type="text" 
+            name="exitOrientation"
+            value={formData.exitOrientation}
             onChange={handleChange}
           />
         </div>
@@ -245,7 +249,7 @@ const ResidentForm = () => {
           <label>Significant Persons:</label>
           <input
             type="text" 
-            name="age"
+            name="significantPersons"
             value={formData.significantPersons}
             onChange={handleChange}
           />
