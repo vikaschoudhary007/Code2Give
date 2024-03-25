@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import "./ResidentForm.css"
 import axios from "axios";
 export const API_BASE_URL="http://localhost:5454/api/v1";
+
 
 
 const ResidentForm = () => {
@@ -19,13 +21,12 @@ const ResidentForm = () => {
     exitOrientation: '',
     challengesIssues: '',
     age: '',
-    borough: '',                    //ADD THIS INTO FORM MISSSSSING
+    borough: '',
     monthlyIncome: '',
     caregivers: '',
     significantPersons: '',
   });
 
-  //for radio buttons, can keep or add up to you
   const immigrationOptions = ["Citizen", "Permanent Resident", "Temporary Resident", "Visa Holder", "Asylum Seeker (Received)", "Asylum Seeker (In-Process)", "No Status"];
 
 
@@ -86,11 +87,10 @@ const ResidentForm = () => {
   };
 
 
-  
   return (
-    <div>
+    <div className="form-container">
 
-      <h2>Add/Create New User</h2>
+      <h2 className="form-title">Add/Create New User</h2>
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -199,11 +199,11 @@ const ResidentForm = () => {
           />
         </div>
         <div>
-          <label>Orientation:</label>
+        <label>Orientation: </label>
           <input
-            type="text" 
+            type="checkbox"
             name="exitOrientation"
-            value={formData.exitOrientation}
+            checked={formData.exitOrientation}
             onChange={handleChange}
           />
         </div>
@@ -227,6 +227,17 @@ const ResidentForm = () => {
             min="0" 
           />
         </div>
+
+        <div>
+          <label>Borough:</label>
+          <input
+            type="text" 
+            name="borough"
+            value={formData.borough}
+            onChange={handleChange}
+          />
+        </div>
+
         <div>
           <label>Monthly Income:</label>
           <input

@@ -1,0 +1,39 @@
+.ShowData {
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: white;
+  }
+  
+  .ShowData h2 {
+    color: #555;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+  }
+
+  .ShowData ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-item {
+    margin-bottom: 20px;
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Ensures the border wraps around the padding */
+}
+
+.user-content {
+    padding: 15px;
+    background-color: #f9f9f9; /* Light background */
+}
+
+.user-content p {
+    margin: 10px 0; /* Adds some space between paragraphs */
+}
